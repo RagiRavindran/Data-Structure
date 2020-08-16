@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct StackNode{
+    int data;
+    struct StackNode *next;
+};
+
+int isempty(struct StackNode* s)
+{
+    return !s;
+    
+}
+struct StackNode *newnode(int data)
+{
+    struct StackNode *node = (struct StackNode*)malloc(sizeof(struct StackNode));
+    node -> data = data;
+    node->next = NULL;
+    return node;
+}
+void push(struct StackNode** root, int data)
+{
+    struct StackNode* node= newnode(data);
+    node->next = *root;
+    *root=node;
+}
+void print(struct StackNode* s)
+{
+    printf("stack is \n");
+    while(s)
+    {
+        printf("%d ",s->data);
+        s = s->next;
+    }
+    printf("\n");
+}
+int pop(struct StackNode** s)
+{
+    int x;
+    if(isempty(*s))
+    {
+        printf("error. stack underflow\n");
+        exit(1);
+        
+    }
+    else{
+    x = (*s)->data;
+    struct StackNode *t;
+    t = *s;
+    *s = (*s)->next;
+    free(t);
+    return x;}
+    
+}
+int top(struct StackNode *s)
+{
+    return (s ->data);
+}
+
+void sortInsert(struct StackNode **s, int x)
+{
+    int t;
+    if(isempty(*s) || x > top(*s))
+    {
+        push(s,x);
+        return;
+    }
+    t = pop(s);
+    sortInsert(s,x);
+    push(s,t);
+}
+void sort(struct StackNode **s)
+{
+    int x;
+    if(!isempty(*s)){
+    x = pop(s);
+    sort(s);
+    sortInsert(s,x);
+    
+        
+    }
+}
+int main()
+{
+    
+    struct StackNode *root = NULL;
+    push(&root,1);
+     push(&root,2);
+      push(&root,3);
+    print(root);
+    //printf("%d\n",isempty(root));
+    printf("deleted %d \n",pop(&root));
+   push(&root,10);
+   push(&root,3);
+   push(&root,11);
+    print(root);
+    sort(&root);
+    print(root);
+    return 0;
+}

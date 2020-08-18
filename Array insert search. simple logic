@@ -1,0 +1,44 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int i,n,po,el;
+    
+    printf("enter size of the array\n");
+    scanf("%d",&n);
+    int arr[n];
+    for(i=0;i<n;i++)
+        scanf("%d",&arr[i]);
+    for(i=0;i<n;i++)
+        printf("%d ",arr[i]);
+    printf("\nenter position and element\n");
+    scanf("%d %d",&po,&el);
+    if(po>n)
+        printf("invalid position \n");
+    else{
+        for(i=n-1;i>=po-1;i--)
+            arr[i+1]=arr[i];
+            
+            arr[po-1]=el;
+                
+        for(i=0;i<=n;i++)
+            printf("%d ",arr[i]);
+    
+    }
+    printf("enter element to search in the array\n");
+    scanf("%d",&el);
+    for(i=0;i<=n;i++)
+            {
+                if(arr[i]==el)
+                {
+                    
+                    printf("%d found at position %d\n",el,i+1);
+                }
+                else printf("%d not found",el)
+            }
+    
+    
+
+    return 0;
+}

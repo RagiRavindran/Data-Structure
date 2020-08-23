@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include<stdlib.h>
 struct Node{
@@ -70,6 +71,42 @@ int count(struct Node* head)
     }printf("NULL\n");
     return c;
 }
+void delet(struct Node** head, int n)
+{
+    int i;
+    struct Node *temp = *head;
+    if(n==1)
+    {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+    for(i=0; i<n-1;i++)
+         temp = temp->next;
+         
+    if(temp->next==NULL)
+    {
+        struct Node *pre = *head;
+        for(i=0; i<n-2;i++)
+            pre = pre->next;
+        pre->next=NULL;
+        free(temp);
+     
+           
+    }
+    else{
+        temp = *head;
+        for(i=0; i<n-2;i++)
+            temp = temp->next;
+        
+         struct Node *temp1 = temp->next;
+         temp->next = temp1->next;
+         free(temp1);
+        
+    }
+    
+    
+}
 int main()
 {
     
@@ -81,5 +118,142 @@ int main()
     pushfrnt(&head,9,2,0);
     pushfrnt(&head,10,4,1);
     printf("count = %d",count(head));
+     delet(&head,6);
+    printf("\ncount = %d",count(head));
+    delet(&head,2);
+    printf("\ncount = %d",count(head));
+     delet(&head,1);
+    printf("\ncount = %d",count(head));
+   
+    
+    return 0;
+}
+#include <stdio.h>
+#include<stdlib.h>
+struct Node{
+  int data;
+  struct Node* next;
+};
+void pushfrnt(struct Node** head_ref, int d, int cn, int fe)
+{
+    int i;
+    struct Node* newnode = (struct Node*)malloc(sizeof(struct Node));
+    
+    if(fe == 0)//begining and end
+    {
+        if(cn == 1)//begining
+        {
+            newnode->data = d;
+            newnode->next = *head_ref;
+            *head_ref = newnode;
+            
+        }
+        else //end
+        {
+            newnode->data = d;
+            newnode->next = NULL;
+            if(*head_ref == NULL)
+                *head_ref = newnode;
+            else
+            {
+                struct Node* temp1 = *head_ref;
+                while(temp1->next != NULL)
+                {
+                    temp1 = temp1->next;
+                } temp1->next = newnode;
+            }
+        }}
+    //inbetween
+    else
+    {
+        newnode->data = d;
+            if(*head_ref == NULL)
+            {
+                newnode->next = NULL;
+                *head_ref = newnode;
+                
+            }
+            else
+            {
+                struct Node* pre = *head_ref;
+                for(i=0; i<cn-2; i++)
+                {
+                    pre = pre->next;
+                }
+                newnode->next = pre->next;
+                pre->next = newnode;
+            }
+    }
+    
+}
+
+int count(struct Node* head)
+{
+    int c = 0;
+    struct Node* current = head;
+    printf("Linked list\n");
+    while(current != NULL)
+    {
+        c++;
+        printf("%d -> ",current->data);
+        current = current->next;
+    }printf("NULL\n");
+    return c;
+}
+void delet(struct Node** head, int n)
+{
+    int i;
+    struct Node *temp = *head;
+    if(n==1)
+    {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+    for(i=0; i<n-1;i++)
+         temp = temp->next;
+         
+    if(temp->next==NULL)
+    {
+        struct Node *pre = *head;
+        for(i=0; i<n-2;i++)
+            pre = pre->next;
+        pre->next=NULL;
+        free(temp);
+     
+           
+    }
+    else{
+        temp = *head;
+        for(i=0; i<n-2;i++)
+            temp = temp->next;
+        
+         struct Node *temp1 = temp->next;
+         temp->next = temp1->next;
+         free(temp1);
+        
+    }
+    
+    
+}
+int main()
+{
+    
+    struct Node* head= NULL;
+    pushfrnt(&head,1,1,0);
+    pushfrnt(&head,2,2,0);
+    pushfrnt(&head,3,2,0);
+    pushfrnt(&head,4,1,0);
+    pushfrnt(&head,9,2,0);
+    pushfrnt(&head,10,4,1);
+    printf("count = %d",count(head));
+     delet(&head,6);
+    printf("\ncount = %d",count(head));
+    delet(&head,2);
+    printf("\ncount = %d",count(head));
+     delet(&head,1);
+    printf("\ncount = %d",count(head));
+   
+    
     return 0;
 }
